@@ -66,6 +66,7 @@ jobs:
           [ "$now" -lt "$target" ] && sleep $((target - now)) || true
 
       - name: Notify Telegram / LINE
+        id: notify
         if: ${{ !steps.check.outputs.skip }}
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -74,8 +75,9 @@ jobs:
           LINE_TO: ${{ secrets.LINE_TO }}
         run: python notify.py site
 
+      # 推送步驟有執行就標記（即使某平台失敗），避免備援排程重複推送到已成功的平台
       - name: Mark as sent
-        if: ${{ !steps.check.outputs.skip }}
+        if: ${{ !cancelled() && (steps.notify.outcome == 'success' || steps.notify.outcome == 'failure') }}
         run: |
           echo "${{ steps.check.outputs.today }}" > site/sent.txt
           ./publish.sh "Sent ${{ steps.check.outputs.today }}"
