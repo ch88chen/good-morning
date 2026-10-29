@@ -1,0 +1,81 @@
+name: Daily good-morning card
+
+on:
+  schedule:
+    # 台北時間 05:47 / 06:07 / 06:27 啟動，產圖後等到 06:30 才推送。
+    # GitHub 排程可能延遲或漏跑，所以設多個時間點；當天已推送過的會自動跳過
+    - cron: "47 21 * * *"
+    - cron: "7 22 * * *"
+    - cron: "27 22 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: good-morning
+  cancel-in-progress: false
+
+jobs:
+  card:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r requirements.txt
+
+      - name: Check out published site
+        run: |
+          if git fetch origin gh-pages; then
+            git worktree add site origin/gh-pages
+          else
+            git worktree add --orphan -b gh-pages site   # 第一次執行
+          fi
+          mkdir -p site/cards
+
+      - name: Skip if already sent today
+        id: check
+        run: |
+          today=$(TZ=Asia/Taipei date +%Y%m%d)
+          echo "today=$today" >> "$GITHUB_OUTPUT"
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "$(cat site/sent.txt 2>/dev/null)" = "$today" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"; echo "今天已推送，跳過"
+          fi
+
+      - name: Build card
+        if: ${{ !steps.check.outputs.skip }}
+        run: |
+          python make_card.py site/cards
+          # 只保留最近 7 天
+          ls site/cards | sort | head -n -14 | sed 's#^#site/cards/#' | xargs -r rm -f
+
+      - name: Publish card (single-commit gh-pages)
+        if: ${{ !steps.check.outputs.skip }}
+        run: ./publish.sh "Card ${{ steps.check.outputs.today }}"
+
+      - name: Wait until 06:30 Taipei
+        if: ${{ !steps.check.outputs.skip && github.event_name == 'schedule' }}
+        run: |
+          target=$(TZ=Asia/Taipei date -d "today 06:30" +%s)
+          now=$(date +%s)
+          [ "$now" -lt "$target" ] && sleep $((target - now)) || true
+
+      - name: Notify Telegram / LINE
+        if: ${{ !steps.check.outputs.skip }}
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+          LINE_TO: ${{ secrets.LINE_TO }}
+        run: python notify.py site
+
+      - name: Mark as sent
+        if: ${{ !steps.check.outputs.skip }}
+        run: |
+          echo "${{ steps.check.outputs.today }}" > site/sent.txt
+          ./publish.sh "Sent ${{ steps.check.outputs.today }}"

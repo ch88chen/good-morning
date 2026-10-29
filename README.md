@@ -1,0 +1,16 @@
+# Good Morning Card
+
+每天台北時間 06:30 自動產生早安圖（歐洲／日本／加拿大景點全景 + 新竹、台北、宜蘭、高雄天氣），
+推送到 LINE 官方帳號與 Telegram「我的第一個AI助理」。全程在 GitHub Actions 執行，不需開電腦。
+
+- `make_card.py`：產圖（天氣來源 Open-Meteo，依白天 06–18 時逐時資料判斷晴／多雲／雨）
+- `spots.json`：景點照片庫，依日期輪播；`panel: "right"` 表示主景在左，天氣面板改放右上
+- `photos/`：已裁好的照片，每日執行不必再連 Wikimedia
+- `notify.py`：Telegram 直接上傳圖檔；LINE 使用 GitHub Pages 上的圖片網址
+- `.github/workflows/daily.yml`：05:47 / 06:07 / 06:27 啟動（防 GitHub 排程延遲），產圖後等到 06:30 推送，當天已推送就跳過
+
+手動重送：`gh workflow run daily.yml -R ch88chen/good-morning`
+
+## 授權
+- 照片：Wikimedia Commons，各張作者與授權（CC BY / CC BY-SA）見 `spots.json` 的 `credit`，並印在圖片右下角
+- 字型：Noto Sans TC、Lora，SIL Open Font License（見 `fonts/`）

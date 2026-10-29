@@ -1,0 +1,189 @@
+[
+ {
+  "key": "santorini",
+  "title": "File:1000 Three domes of Oia in Santorini Photo by Giles Laurent.jpg",
+  "name": "希臘・聖托里尼島 伊亞",
+  "credit": "Photo: Giles Laurent / CC BY-SA 4.0 / Wikimedia Commons"
+ },
+ {
+  "key": "kinkakuji",
+  "title": "File:Shariden, Kinkaku-ji, Kyoto, East View 20130811 1.jpg",
+  "name": "日本・京都 金閣寺",
+  "credit": "Photo: DXR / CC BY-SA 3.0 / Wikimedia Commons"
+ },
+ {
+  "key": "hallstatt",
+  "title": "File:View of Hallstatt waterfront and churches from Hallstätter See.jpg",
+  "name": "奧地利・哈修塔特湖畔小鎮",
+  "credit": "Photo: David Kernan / CC BY 4.0 / Wikimedia Commons"
+ },
+ {
+  "key": "kiyomizu",
+  "title": "File:Kiyomizu-dera, Kyoto, November 2016 -01.jpg",
+  "name": "日本・京都 清水寺",
+  "credit": "Photo: Martin Falbisoner / CC BY-SA 4.0 / Wikimedia Commons"
+ },
+ {
+  "key": "louise",
+  "title": "File:1 lake louise pano 2019.jpg",
+  "name": "加拿大・班夫國家公園 露易絲湖",
+  "credit": "Photo: Chensiyuan / CC BY-SA 4.0 / Wikimedia Commons"
+ },
+ {
+  "key": "matterhorn",
+  "title": "File:Matterhorn Riffelsee 08.jpg",
+  "name": "瑞士・采爾馬特 馬特洪峰",
+  "credit": "Photo: FrDr / CC BY-SA 4.0 / Wikimedia Commons",
+  "panel": "right"
+ },
+ {
+  "key": "itsukushima",
+  "title": "File:Itsukushima-jinja torii, Miyajima, Japan, 20240816 1716 4048.jpg",
+  "name": "日本・廣島縣 嚴島神社",
+  "credit": "Photo: Jakub Hałun / CC BY 4.0 / Wikimedia Commons"
+ },
+ {
+  "key": "peyto",
+  "title": "File:Peyto Lake panoramic view.jpg",
+  "name": "加拿大・班夫國家公園 佩托湖",
+  "credit": "Photo: Thomas Fuhrmann / CC BY-SA 4.0 / Wikimedia Commons"
+ },
+ {
+  "key": "neuschwanstein",
+  "title": "File:Neuschwanstein Castle 07.jpg",
+  "name": "德國・巴伐利亞 新天鵝堡",
+  "credit": "Photo: Llez / CC BY-SA 3.0 / Wikimedia Commons",
+  "panel": "right"
+ },
+ {
+  "key": "chureito",
+  "title": "File:Chureito Pagoda and Mount Fuji 20241022.jpg",
+  "name": "日本・山梨縣　新倉山淺間公園 忠靈塔與富士山",
+  "credit": "Photo: Supanut Arun / CC BY 4.0 / Wikimedia Commons"
+ },
+ {
+  "key": "kawaguchiko",
+  "title": "File:Lake Kawaguchiko Sakura Mount Fuji 4.JPG",
+  "name": "日本・山梨縣 河口湖與富士山",
+  "credit": "Photo: Midori / CC BY 3.0 / Wikimedia Commons"
+ },
+ {
+  "key": "niagara",
+  "title": "File:Niagra Falls panorama.jpg",
+  "name": "加拿大・安大略省 尼加拉瀑布",
+  "credit": "Photo: APK / CC BY-SA 4.0 / Wikimedia Commons"
+ },
+ {
+  "key": "bled",
+  "title": "File:Bled Island in Lake Bled, Slovenia, 20240504 0902 8306.jpg",
+  "name": "斯洛維尼亞・布萊德湖",
+  "credit": "Photo: Jakub Hałun / CC BY 4.0 / Wikimedia Commons"
+ },
+ {
+  "key": "himeji",
+  "title": "File:Himeji Castle, November 2016 -02.jpg",
+  "name": "日本・兵庫縣 姬路城",
+  "credit": "Photo: Martin Falbisoner / CC BY-SA 4.0 / Wikimedia Commons"
+ },
+ {
+  "key": "quebec",
+  "title": "File:Château Frontenac city at night.jpg",
+  "name": "加拿大・魁北克市 芳緹娜城堡",
+  "credit": "Photo: Wilfredor / CC BY-SA 4.0 / Wikimedia Commons",
+  "panel": "right"
+ },
+ {
+  "key": "prague",
+  "title": "File:Prague Castle from Charles Bridge panorama.JPG",
+  "name": "捷克・布拉格 布拉格城堡",
+  "credit": "Photo: Janmad / CC BY 3.0 / Wikimedia Commons",
+  "panel": "right"
+ },
+ {
+  "key": "venice",
+  "title": "File:Canal Grande Chiesa della Salute e Dogana dal ponte dell Accademia.jpg",
+  "name": "義大利・威尼斯 大運河",
+  "credit": "Photo: Wolfgang Moroder / CC BY-SA 3.0 / Wikimedia Commons"
+ },
+ {
+  "key": "toronto",
+  "title": "File:Toronto Skyline Wide 2014.jpg",
+  "name": "加拿大・多倫多 天際線",
+  "credit": "Photo: Christine Wagner / CC BY 2.0 / Wikimedia Commons",
+  "panel": "right"
+ },
+ {
+  "key": "manarola",
+  "title": "File:Manarola NW Cinque Terre Sep23 A7C 07233.jpg",
+  "name": "義大利・五漁村 馬納羅拉",
+  "credit": "Photo: Timothy A. Gonsalves / CC BY-SA 4.0 / Wikimedia Commons",
+  "panel": "right"
+ },
+ {
+  "key": "positano",
+  "title": "File:Positano (Italy) 03.jpg",
+  "name": "義大利・阿瑪菲海岸 波西塔諾",
+  "credit": "Photo: Bernard Gagnon / CC BY 4.0 / Wikimedia Commons"
+ },
+ {
+  "key": "emerald",
+  "title": "File:Emerald Lake - Yoho National Park.JPG",
+  "name": "加拿大・優鶴國家公園 翡翠湖",
+  "credit": "Photo: JZ85 / CC BY 3.0 / Wikimedia Commons"
+ },
+ {
+  "key": "dubrovnik",
+  "title": "File:Casco viejo de Dubrovnik, Croacia, 2014-04-14, DD 04.JPG",
+  "name": "克羅埃西亞・杜布羅夫尼克古城",
+  "credit": "Photo: Diego Delso / CC BY-SA 3.0 / Wikimedia Commons"
+ },
+ {
+  "key": "montsaintmichel",
+  "title": "File:Mont Saint Michel and sheep - 2026.jpg",
+  "name": "法國・諾曼第 聖米歇爾山",
+  "credit": "Photo: Eric Kilby / CC BY-SA 4.0 / Wikimedia Commons"
+ },
+ {
+  "key": "maligne",
+  "title": "File:Spirit Island on Maligne Lake1.jpg",
+  "name": "加拿大・賈斯珀國家公園 瑪琳湖精靈島",
+  "credit": "Photo: Bernd Thaller / CC BY 2.0 / Wikimedia Commons"
+ },
+ {
+  "key": "lauterbrunnen",
+  "title": "File:1 lauterbrunnen valley 2012b.jpg",
+  "name": "瑞士・勞特布倫嫩山谷",
+  "credit": "Photo: Chensiyuan / CC BY-SA 4.0 / Wikimedia Commons"
+ },
+ {
+  "key": "chillon",
+  "title": "File:Chillon Castle 08.jpg",
+  "name": "瑞士・日內瓦湖 西庸城堡",
+  "credit": "Photo: SimonWaldherr / CC BY-SA 4.0 / Wikimedia Commons"
+ },
+ {
+  "key": "vermilion",
+  "title": "File:Mount Rundle, as seen from First Vermillion Lake 20240821 1.jpg",
+  "name": "加拿大・班夫 朱砂湖與倫德爾山",
+  "credit": "Photo: DXR / CC BY-SA 4.0 / Wikimedia Commons"
+ },
+ {
+  "key": "budapest",
+  "title": "File:20190503 Hungarian Parliament Building 1814 2263 DxO.jpg",
+  "name": "匈牙利・布達佩斯 國會大廈",
+  "credit": "Photo: Jakub Hałun / CC BY-SA 4.0 / Wikimedia Commons"
+ },
+ {
+  "key": "reine",
+  "title": "File:Hammarskaftet at Reine, Lofoten, Norway, 2015 September.jpg",
+  "name": "挪威・羅浮敦群島 雷納漁村",
+  "credit": "Photo: Ximonic (Simo Räsänen) / CC BY-SA 3.0 / Wikimedia Commons",
+  "panel": "right"
+ },
+ {
+  "key": "oeschinensee",
+  "title": "File:20190725 Oeschinensee-Panorama, Kandersteg (06540-42 stitch).jpg",
+  "name": "瑞士・坎德施泰格 厄辛嫩湖",
+  "credit": "Photo: Günter Seggebäing, Coesfeld / CC BY-SA 3.0 / Wikimedia Commons"
+ }
+]
