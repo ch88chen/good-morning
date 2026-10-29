@@ -187,8 +187,8 @@ def tint(rgb, toward, k):
     return tuple(round(c + (t - c) * k) for c, t in zip(rgb, toward))
 
 
-def build(spot, weather, today, out_path):
-    photo = load_photo(spot)
+def build(spot, weather, today, out_path, photo=None):
+    photo = photo or load_photo(spot)
     ph = photo.height
     canvas = Image.new("RGBA", (W, ph), (0, 0, 0, 255))
     canvas.paste(photo, (0, 0))
@@ -263,10 +263,19 @@ def build(spot, weather, today, out_path):
 def main():
     today = dt.datetime.now(TZ).date()
     # 從起始日起按 spots.json 順序每天換一張，整輪播完才會重複；新照片請加在清單尾端，不會打亂既有順序
-    spot = SPOTS[(today - ROTATION_START).days % len(SPOTS)]
+    day = (today - ROTATION_START).days
+    spot = SPOTS[day % len(SPOTS)]
+    try:
+        photo = load_photo(spot)
+    except Exception as e:   # Commons 連不上時改用 repo 內已存的照片，當天照常推送
+        cached = [s for s in SPOTS if (HERE / "photos" / f"{s['key']}.jpg").exists()]
+        fallback = cached[day % len(cached)]
+        print(f"⚠️ 下載 {spot['title']} 失敗（{e}），改用 {fallback['key']}", file=sys.stderr)
+        spot = fallback
+        photo = load_photo(spot)
     out_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else HERE / "output"
     out_dir.mkdir(parents=True, exist_ok=True)
-    print(build(spot, fetch_weather(), today, out_dir / f"{today:%Y%m%d}.jpg"))
+    print(build(spot, fetch_weather(), today, out_dir / f"{today:%Y%m%d}.jpg", photo))
 
 
 if __name__ == "__main__":

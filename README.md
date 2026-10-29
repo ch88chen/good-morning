@@ -4,8 +4,8 @@
 推送到 LINE 官方帳號與 Telegram「我的第一個AI助理」。全程在 GitHub Actions 執行，不需開電腦。
 
 - `make_card.py`：產圖（天氣來源 Open-Meteo，依白天 06–18 時逐時資料判斷晴／多雲／雨）
-- `spots.json`：景點照片庫，依日期輪播；`panel: "right"` 表示主景在左，天氣面板改放右上
-- `photos/`：已裁好的照片，每日執行不必再連 Wikimedia
+- `spots.json`：381 張景點照片（約 180 個景點，每個景點 1–4 張不同季節／角度），從 2026-10-29 起每天依序一張，一整輪約一年才重複；同景點至少間隔 55 天。新照片加在尾端，不會打亂既有順序。`panel: "right"` 表示主景在左，天氣面板改放右上
+- `photos/`：前 30 張已裁好的照片；其餘當天才從 Wikimedia 下載，下載失敗就改用 photos/ 內的照片，當天照常推送
 - `notify.py`：Telegram 直接上傳圖檔；LINE 使用 GitHub Pages 上的圖片網址
 - `.github/workflows/daily.yml`：05:47 / 06:07 / 06:27 啟動（防 GitHub 排程延遲），產圖後等到 06:30 推送，當天已推送就跳過
 
