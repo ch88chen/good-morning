@@ -34,6 +34,7 @@ CITIES = [
 ]
 
 # 景點照片庫：title 為 Wikimedia Commons 檔名；crop_x / crop_y 為裁成全景時保留區域的位置 (0=左/頂, 1=右/底)
+ROTATION_START = dt.date(2026, 10, 29)   # spots.json 第 1 張的日期
 SPOTS = json.loads((HERE / "spots.json").read_text(encoding="utf-8"))
 
 DAY_HOURS = range(6, 18)  # 白天時段 06:00~17:59，用來判斷當日天氣描述
@@ -261,7 +262,8 @@ def build(spot, weather, today, out_path):
 
 def main():
     today = dt.datetime.now(TZ).date()
-    spot = SPOTS[today.toordinal() % len(SPOTS)]   # 依日期輪播
+    # 從起始日起按 spots.json 順序每天換一張，整輪播完才會重複；新照片請加在清單尾端，不會打亂既有順序
+    spot = SPOTS[(today - ROTATION_START).days % len(SPOTS)]
     out_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else HERE / "output"
     out_dir.mkdir(parents=True, exist_ok=True)
     print(build(spot, fetch_weather(), today, out_dir / f"{today:%Y%m%d}.jpg"))
