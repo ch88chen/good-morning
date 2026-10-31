@@ -11,7 +11,7 @@
 
 手動重送：`gh workflow run daily.yml -R ch88chen/good-morning -f force=true`（不加 force 時，當天已送過會自動跳過）
 
-準時觸發：GitHub 排程常延遲 1～3 小時，所以由 cron-job.org 每天台北 05:50 呼叫 `POST /repos/ch88chen/good-morning/actions/workflows/daily.yml/dispatches`（fine-grained token，只給這個 repo 的 Actions 寫入權限）；GitHub 排程保留當備援。
+準時觸發：GitHub 排程常延遲 1～3 小時，所以由 Claude 雲端排程（routine）每天台北 05:50 推一個空 commit 到 `claude/good-morning-trigger` 分支觸發；GitHub 排程保留當備援。
 
 ## 授權
 - 照片：Wikimedia Commons，各張作者與授權（CC BY / CC BY-SA）見 `spots.json` 的 `credit`，並印在圖片右下角

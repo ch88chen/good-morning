@@ -7,7 +7,9 @@ on:
     - cron: "47 21 * * *"
     - cron: "7 22 * * *"
     - cron: "27 22 * * *"
-  # 外部定時服務（cron-job.org）每天 05:50 透過 API 觸發，比 GitHub 排程準時
+  # Claude 雲端排程每天台北 05:50 推一個空 commit 到這個分支來觸發，比 GitHub 排程準時
+  push:
+    branches: [claude/good-morning-trigger]
   workflow_dispatch:
     inputs:
       force:
@@ -28,6 +30,8 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main   # 觸發分支只放空 commit，程式一律用 main
 
       - uses: actions/setup-python@v5
         with:
