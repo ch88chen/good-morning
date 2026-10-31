@@ -9,7 +9,9 @@
 - `notify.py`：Telegram 直接上傳圖檔；LINE 使用 GitHub Pages 上的圖片網址
 - `.github/workflows/daily.yml`：05:47 / 06:07 / 06:27 啟動（防 GitHub 排程延遲），產圖後等到 06:30 推送，當天已推送就跳過
 
-手動重送：`gh workflow run daily.yml -R ch88chen/good-morning`
+手動重送：`gh workflow run daily.yml -R ch88chen/good-morning -f force=true`（不加 force 時，當天已送過會自動跳過）
+
+準時觸發：GitHub 排程常延遲 1～3 小時，所以由 cron-job.org 每天台北 05:50 呼叫 `POST /repos/ch88chen/good-morning/actions/workflows/daily.yml/dispatches`（fine-grained token，只給這個 repo 的 Actions 寫入權限）；GitHub 排程保留當備援。
 
 ## 授權
 - 照片：Wikimedia Commons，各張作者與授權（CC BY / CC BY-SA）見 `spots.json` 的 `credit`，並印在圖片右下角

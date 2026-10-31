@@ -7,7 +7,13 @@ on:
     - cron: "47 21 * * *"
     - cron: "7 22 * * *"
     - cron: "27 22 * * *"
+  # 外部定時服務（cron-job.org）每天 05:50 透過 API 觸發，比 GitHub 排程準時
   workflow_dispatch:
+    inputs:
+      force:
+        description: "今天已送過也要重送"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -43,7 +49,7 @@ jobs:
         run: |
           today=$(TZ=Asia/Taipei date +%Y%m%d)
           echo "today=$today" >> "$GITHUB_OUTPUT"
-          if [ "${{ github.event_name }}" = "schedule" ] && [ "$(cat site/sent.txt 2>/dev/null)" = "$today" ]; then
+          if [ "${{ inputs.force }}" != "true" ] && [ "$(cat site/sent.txt 2>/dev/null)" = "$today" ]; then
             echo "skip=true" >> "$GITHUB_OUTPUT"; echo "今天已推送，跳過"
           fi
 
