@@ -69,7 +69,7 @@ jobs:
         run: ./publish.sh "Card ${{ steps.check.outputs.today }}"
 
       - name: Wait until 06:30 Taipei
-        if: ${{ !steps.check.outputs.skip && github.event_name == 'schedule' }}
+        if: ${{ !steps.check.outputs.skip && github.event_name != 'workflow_dispatch' }}  # 手動重送不等
         run: |
           target=$(TZ=Asia/Taipei date -d "today 06:30" +%s)
           now=$(date +%s)
