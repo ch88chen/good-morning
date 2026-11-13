@@ -13,7 +13,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageStat
 
 HERE = Path(__file__).resolve().parent
-UA = {"User-Agent": "GoodMorningCard/1.0 (ch88chen)"}
+UA = {"User-Agent": "GoodMorningCard/1.0 github.com/ch88chen/good-morning"}   # MET Norway 要求可辨識的 UA
 TZ = dt.timezone(dt.timedelta(hours=8))
 
 W = 2048            # 輸出寬度
@@ -67,12 +67,28 @@ def describe_day(cloud, codes, pops):
     return sky, icon
 
 
-def get_json(url):
-    with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=30) as r:
-        return json.load(r)
+def get_json(url, tries=5):
+    # 偶爾會連線逾時（2026-11-14 曾因此整天沒發），重試幾次再放棄
+    for i in range(tries):
+        try:
+            with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=30) as r:
+                return json.load(r)
+        except (urllib.error.URLError, TimeoutError) as e:
+            if i == tries - 1:
+                raise
+            print(f"重試 {url[:40]}…（{e}）", file=sys.stderr)
+            time.sleep(15 * (i + 1))
 
 
 def fetch_weather():
+    try:
+        return fetch_open_meteo()
+    except Exception as e:   # Open-Meteo 整個連不上時（2026-11-14 曾發生），改用挪威氣象局
+        print(f"Open-Meteo 失敗，改用 MET Norway（{e}）", file=sys.stderr)
+        return fetch_met_norway()
+
+
+def fetch_open_meteo():
     q = urllib.parse.urlencode({
         "latitude": ",".join(str(c[1]) for c in CITIES),
         "longitude": ",".join(str(c[2]) for c in CITIES),
@@ -94,6 +110,39 @@ def fetch_weather():
             "hi": round(d["daily"]["temperature_2m_max"][0]),
             "pop": max(pops),
         })
+    return out
+
+
+def met_code(symbol):
+    """MET Norway 天氣符號 → 近似 WMO 代碼（describe_day 只看是否 ≥51 下雨、≥95 雷雨）"""
+    if "thunder" in symbol:
+        return 95
+    if any(w in symbol for w in ("rain", "sleet", "snow")):
+        return 61
+    return 3
+
+
+def fetch_met_norway():
+    """備援來源：沒有降雨機率，有雨的小時以 70% 計"""
+    today = dt.datetime.now(TZ).date()
+    out = []
+    for name, lat, lon in CITIES:
+        q = urllib.parse.urlencode({"lat": round(lat, 4), "lon": round(lon, 4)})
+        ts = get_json("https://api.met.no/weatherapi/locationforecast/2.0/complete?" + q)["properties"]["timeseries"]
+        temps, cloud, codes = [], [], []
+        for t in ts:
+            local = dt.datetime.fromisoformat(t["time"].replace("Z", "+00:00")).astimezone(TZ)
+            if local.date() != today:
+                continue
+            temps.append(t["data"]["instant"]["details"]["air_temperature"])
+            nxt = t["data"].get("next_1_hours")
+            if local.hour in DAY_HOURS and nxt:
+                cloud.append(t["data"]["instant"]["details"]["cloud_area_fraction"])
+                codes.append(met_code(nxt["summary"]["symbol_code"]))
+        pops = [70 if c >= 51 else 0 for c in codes]
+        desc, icon = describe_day(cloud, codes, pops)
+        out.append({"name": name, "desc": desc, "icon": icon,
+                    "lo": round(min(temps)), "hi": round(max(temps)), "pop": max(pops)})
     return out
 
 
