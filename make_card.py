@@ -30,6 +30,7 @@ CITIES = [
     ("新竹市", 24.8138, 120.9675),
     ("台北市", 25.0330, 121.5654),
     ("宜蘭縣", 24.7021, 121.7378),
+    ("彰化縣", 24.0752, 120.5440),
     ("高雄市", 22.6273, 120.3014),
 ]
 
@@ -253,28 +254,28 @@ def build(spot, weather, today, out_path, photo=None):
                      fill=light + (255,), shadow=(10, 20, 40, 230), blur=7, anchor="ma")
 
     # 左上：天氣面板
-    f_name, f_temp, f_desc = font(CJK_BOLD, 58), font(CJK_BOLD, 58), font(CJK_MEDIUM, 44)
-    x0, y0, row_h, icon_s, pad = 40, 128, 88, 70, 22
+    f_name, f_temp, f_desc = font(CJK_BOLD, 46), font(CJK_BOLD, 46), font(CJK_MEDIUM, 36)
+    x0, y0, row_h, icon_s, pad = 36, 124, 70, 56, 18
     name_w = max(f_name.getlength(w["name"]) for w in weather)
     temp_w = max(f_temp.getlength(f"{w['lo']}~{w['hi']}°C") for w in weather)
     desc_w = max(f_desc.getlength(f"{w['desc']} 降雨{w['pop']}%") for w in weather)
-    panel_w = pad + icon_s + 22 + name_w + 30 + temp_w + 30 + desc_w + pad
+    panel_w = pad + icon_s + 18 + name_w + 24 + temp_w + 24 + desc_w + pad
     if spot.get("panel") == "right":   # 主景在左側的照片，面板改放右上
         x0 = W - x0 - panel_w
     panel_h = pad * 2 + row_h * len(weather) - 10
     panel = Image.new("RGBA", canvas.size, (0, 0, 0, 0))
-    ImageDraw.Draw(panel).rounded_rectangle([x0, y0, x0 + panel_w, y0 + panel_h], 28, fill=(15, 25, 45, 50))
+    ImageDraw.Draw(panel).rounded_rectangle([x0, y0, x0 + panel_w, y0 + panel_h], 24, fill=(15, 25, 45, 50))
     canvas.alpha_composite(panel)
     d = ImageDraw.Draw(canvas)
     for i, w in enumerate(weather):
         ry = y0 + pad + i * row_h
         cy = ry + icon_s / 2
         draw_icon(d, w["icon"], x0 + pad, ry, icon_s)
-        x = x0 + pad + icon_s + 22
+        x = x0 + pad + icon_s + 18
         text_with_shadow(canvas, (x, cy), w["name"], f_name, (255, 255, 255, 255), anchor="lm", blur=4)
-        x += name_w + 30
+        x += name_w + 24
         text_with_shadow(canvas, (x, cy), f"{w['lo']}~{w['hi']}°C", f_temp, (255, 236, 179, 255), anchor="lm", blur=4)
-        x += temp_w + 30
+        x += temp_w + 24
         text_with_shadow(canvas, (x, cy), f"{w['desc']} 降雨{w['pop']}%", f_desc, light + (255,), anchor="lm", blur=4)
 
     # 下方資訊帶：半透明漸層疊在照片上，地點 + 日期
